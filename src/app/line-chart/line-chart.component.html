@@ -1,0 +1,9 @@
+<button (click)="zoomIn()" style="margin-inline-end: 5px;">Zoom In</button>
+<button (click)="zoomOut()" style="margin-inline-end: 5px;">Zoom Out</button>
+<button (click)="toggleYAixs()" style="margin-inline-end: 5px; color: #fff;" [style.background-color]="showYAxis? 'green' : 'gray'">Y-Axis</button>
+<button (click)="toggleSeries()" style="margin-inline-end: 5px; color: #fff;" [style.background-color]="showSeries? 'green' : 'gray'" >Series</button>
+
+
+<br /><br />
+<div id="chartDiv" (window:resize)="onResize($event)"></div>
+

@@ -1,0 +1,15 @@
+::ng-deep table tr:nth-child(1) {  
+    position: relative;
+  }
+
+  ::ng-deep table tr:nth-child(1) td:nth-child(3) {
+    position: absolute;
+
+    /* left: 200px; */
+  }
+
+::ng-deep table tr:nth-child(1) td:nth-child(3) canvas{  
+    mix-blend-mode: multiply;
+    cursor: w-resize;
+
+} 
