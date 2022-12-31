@@ -1,0 +1,34 @@
+<mat-card class="line-chart-widget-card">
+    <mat-card-title class="line-chart-widget-title">
+        {{title}}
+    </mat-card-title>
+    <mat-card-content>
+        <mat-card-subtitle class="line-chart-widget-subtitle align-left">
+            {{subtitle}}
+        </mat-card-subtitle>
+        <div style="border: 1px solid #cbcbcbb0">
+            <mat-toolbar class="line-chart-widget-toolbar">
+                <img src="assets/filter.png"
+                    class="line-chart-widget-toolbar-material-icon" />
+                <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
+                <img src="assets/zoom_out.png"
+                    class="line-chart-widget-toolbar-material-icon"  (click)="onZoomOutButtonClick()" />
+                <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
+                <img src="assets/zoom_in.png"
+                    class="line-chart-widget-toolbar-material-icon" (click)="onZoomInButtonClick()"/>
+                <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
+                <img src="assets/double_cursor.png"
+                    class="line-chart-widget-toolbar-material-icon" />
+                <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
+                <img src="assets/single_cursor.png"
+                    class="line-chart-widget-toolbar-material-icon" />
+                <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
+
+            </mat-toolbar>
+            <div class="chart-container">
+                <canvas [id]="lineChartWidgetID"></canvas>
+            </div>
+
+        </div>
+    </mat-card-content>
+</mat-card>

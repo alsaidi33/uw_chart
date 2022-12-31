@@ -1,0 +1,74 @@
+.line-chart-widget-card {
+    background: white;
+    background-color: white; 
+    margin: 0em 0em 0em 0em;
+    opacity: 100%;
+    box-shadow: 0em 0.188em 0.5em rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    padding: 0em 1em 0em 1em;
+    overflow: auto;
+    min-height: 5em;
+    width: 100%;
+    width: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
+    width: stretch;
+    height: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    height: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
+    height: stretch;
+    height: calc(100vh - 5rem);
+    position: relative;
+    word-break: break-all;
+    color: white;
+}
+
+.line-chart-widget-title {
+    margin-bottom: 0em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #041b3b;
+    font-size: var(--font-size-12px);
+    margin-top: 0.5em !important;
+}
+
+.line-chart-widget-subtitle {
+    opacity: 87%;
+    font-size: var(--font-size-12px);
+}
+
+.mat-card-title:not(:first-child),
+.mat-card-subtitle:not(:first-child) {
+    margin-top: -0.6em;
+}
+
+.chart-container{
+    min-height: 30vh !important;
+    padding: 10px;
+}
+
+.line-chart-widget-toolbar {
+    background-color: #efefefa1;
+    color: rgb(0 23 56);
+}
+
+.line-chart-widget-toolbar .mat-toolbar-row, .mat-toolbar-single-row {
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 35px !important;
+    padding: 0px;
+}
+
+.line-chart-widget-toolbar-material-icon {
+    margin: 0 10px;
+    height: 20px;
+}
+
+.line-chart-widget-toolbar-divider {
+    height: 20px;
+}
+
