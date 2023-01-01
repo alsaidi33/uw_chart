@@ -18,17 +18,42 @@
                     class="line-chart-widget-toolbar-material-icon" (click)="onZoomInButtonClick()"/>
                 <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
                 <img src="assets/double_cursor.png"
-                    class="line-chart-widget-toolbar-material-icon" />
+                    class="line-chart-widget-toolbar-material-icon" (click)="toggleDoubleAnnotation()" style="cursor: pointer;"/>
                 <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
                 <img src="assets/single_cursor.png"
-                    class="line-chart-widget-toolbar-material-icon" />
+                    class="line-chart-widget-toolbar-material-icon" (click)="toggleSingleAnnotation()" style="cursor: pointer;"/>
                 <mat-divider vertical class="line-chart-widget-toolbar-divider"></mat-divider>
 
             </mat-toolbar>
             <div class="chart-container">
                 <canvas [id]="lineChartWidgetID"></canvas>
             </div>
+           
 
+        </div>
+        <br>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: start;">Series</th>
+                        <th>value</th>
+                        <th>min</th>
+                        <th>max</th>
+                        <th>max</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let seriesStat of seriesStats" [style.color]="seriesStat.color">
+                        <td>{{seriesStat.seriesName}}</td>
+                        <td style="text-align: center;">{{seriesStat.value}}</td>
+                        <td style="text-align: center;">{{seriesStat.min}}</td>
+                        <td style="text-align: center;">{{seriesStat.max}}</td>
+                        <td style="text-align: center;">{{seriesStat.avg}}</td>
+                    </tr>
+                </tbody>
+                
+            </table>
         </div>
     </mat-card-content>
 </mat-card>

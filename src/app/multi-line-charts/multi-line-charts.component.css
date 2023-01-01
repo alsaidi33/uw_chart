@@ -72,3 +72,14 @@
     height: 20px;
 }
 
+
+table {
+    width: 100%;
+    color: #666;
+    border-collapse: collapse;
+}
+
+table td,table th {
+    border: 1px solid #CCC;
+    padding: 5px;
+}

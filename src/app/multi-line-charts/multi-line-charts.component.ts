@@ -7,6 +7,7 @@ import { Chart, registerables, UpdateModeEnum } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
 import * as dragerPlugin from './drager-plugin';
+import { SeriesStats } from './series-stats';
 
 import * as Utils from './utils';
 
@@ -24,6 +25,9 @@ export class MultiLineChartsComponent implements OnInit {
   @Input() lineChartWidgetID: string = 'DefaultID';
 
   public chart: any;
+
+  seriesStats: SeriesStats[] = [];
+  xAxisCenter: number = 0;
   constructor(private elementRef: ElementRef) {
     Chart.register(...registerables);
     // Chart.register(zoomPlugin);
@@ -35,9 +39,34 @@ export class MultiLineChartsComponent implements OnInit {
 
   ngAfterViewInit() {
     this.initializeLineChart();
+
+    Utils.singleAnnotationEmitter.subscribe((x: number) => {
+      this.updateSeriesStats(x);
+    });
+  }
+
+  updateSeriesStats(x: number) {
+    for (const stat of this.seriesStats) {
+      for (const stat of this.seriesStats) {
+        stat.value = stat.data[x];
+      }
+    }
+  }
+
+  resetSeriesStats() {
+    for (const stat of this.seriesStats) {
+      for (const stat of this.seriesStats) {
+        stat.value = 0;
+        stat.min = 0;
+        stat.max = 0;
+        stat.avg = 0;
+      }
+    }
   }
 
   initializeLineChart() {
+
+    
     var gradientSeries1 = this.elementRef.nativeElement
       .querySelector(`#${this.lineChartWidgetID}`)
       .getContext('2d')
@@ -51,6 +80,35 @@ export class MultiLineChartsComponent implements OnInit {
       .createLinearGradient(0, 0, 0, 400);
     gradientSeries2.addColorStop(0.1, 'rgba(153, 202, 60, 0.2)');
     gradientSeries2.addColorStop(0.5, 'rgba(153, 202, 60, 0)');
+
+    let datasets =[{
+      label: 'Sales',
+      data: [467, 576, 572, 79, 92, 574, 573, 576],
+      borderColor: '#1D6CB4',
+      fill: true,
+      backgroundColor: gradientSeries1,
+      borderWidth: 1.5,
+      pointStyle: 'circle',
+      pointBackgroundColor: '#fff',
+      yAxisID: 'y'
+    },
+    {
+      label: 'Profit',
+      data: [542, 542, 536, 327, 17, 0.00, 538, 541],
+      borderColor: '#99CA3C',
+      fill: true,
+      backgroundColor: gradientSeries2,
+      borderWidth: 1.5,
+      pointStyle: 'circle',
+      pointBackgroundColor: '#fff',
+      yAxisID: 'y1'
+    }];
+
+    this.seriesStats = datasets.map<SeriesStats>(d =>  {
+      return {seriesName: d.label, data : d.data, color: d.borderColor, value: 0, min: 0, max: 0, avg: 0}
+    });
+
+    this.xAxisCenter = this.getXAxisCenter(this.seriesStats);
 
     this.chart = new Chart(
       this.elementRef.nativeElement.querySelector(`#${this.lineChartWidgetID}`),
@@ -68,30 +126,7 @@ export class MultiLineChartsComponent implements OnInit {
             '2022-05-16',
             '2022-05-17',
           ],
-          datasets: [
-            {
-              label: 'Sales',
-              data: ['467', '576', '572', '79', '92', '574', '573', '576'],
-              borderColor: '#1D6CB4',
-              fill: true,
-              backgroundColor: gradientSeries1,
-              borderWidth: 1.5,
-              pointStyle: 'circle',
-              pointBackgroundColor: '#fff',
-              yAxisID: 'y'
-            },
-            {
-              label: 'Profit',
-              data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
-              borderColor: '#99CA3C',
-              fill: true,
-              backgroundColor: gradientSeries2,
-              borderWidth: 1.5,
-              pointStyle: 'circle',
-              pointBackgroundColor: '#fff',
-              yAxisID: 'y1'
-            },
-          ],
+          datasets: datasets,
         },
         options: {
           events: ['mousedown', 'mouseup', 'mousemove', 'mouseout'],
@@ -120,14 +155,30 @@ export class MultiLineChartsComponent implements OnInit {
               },
 
               annotations: {
-                
-                line1: {
-                  
+
+                line0: {
+                  display: false,
                   type: 'line',
                   xMin: '2022-05-12',
                   xMax: '2022-05-12',
                   borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 20,
+                  borderWidth: 2,
+                  label: {
+                    display: true,
+                    content: [' '],
+                    textAlign: 'center'
+                  },
+
+                  
+                },
+                
+                line1: {
+                  display: false,
+                  type: 'line',
+                  xMin: '2022-05-12',
+                  xMax: '2022-05-12',
+                  borderColor: 'rgb(255, 99, 132)',
+                  borderWidth: 2,
                   label: {
                     display: true,
                     content: [' '],
@@ -137,7 +188,7 @@ export class MultiLineChartsComponent implements OnInit {
                   
                 },
                 line2: {
-                  
+                  display: false,
                   type: 'line',
                   xMin: '2022-05-14',
                   xMax: '2022-05-14',
@@ -193,8 +244,46 @@ export class MultiLineChartsComponent implements OnInit {
       }
     );
 
+    this.chart.options.plugins.annotation.annotations.line0.xMin = this.chart.config.data.labels[this.xAxisCenter];
+    this.chart.options.plugins.annotation.annotations.line0.xMax = this.chart.config.data.labels[this.xAxisCenter];
+    this.chart.update();
     Utils.anotationData.chart = this.chart;
     
+  }
+
+
+  getXAxisCenter(seriesStats: SeriesStats[]){
+    var maxLenth = 0;
+    for(var i = 0; i < seriesStats.length; i++){
+      if(seriesStats[i].data.length > maxLenth){
+        maxLenth = seriesStats[i].data.length;
+      }
+    }
+    return Math.floor(maxLenth / 2);    
+  }
+
+  toggleSingleAnnotation() {
+    this.chart.options.plugins.annotation.annotations.line0.xMin = this.chart.config.data.labels[this.xAxisCenter];
+    this.chart.options.plugins.annotation.annotations.line0.xMax = this.chart.config.data.labels[this.xAxisCenter];
+    
+    this.chart.options.plugins.annotation.annotations.line0.display = !this.chart.options.plugins.annotation.annotations.line0.display;
+    this.chart.options.plugins.annotation.annotations.line1.display = false;
+    this.chart.options.plugins.annotation.annotations.line2.display = false;
+   
+    this.chart.update();
+    if(this.chart.options.plugins.annotation.annotations.line0.display){
+      this.updateSeriesStats(this.xAxisCenter)
+    } else {
+      this.resetSeriesStats();
+    }
+  }
+
+
+  toggleDoubleAnnotation() {
+    this.chart.options.plugins.annotation.annotations.line0.display = false
+    this.chart.options.plugins.annotation.annotations.line1.display = !this.chart.options.plugins.annotation.annotations.line1.display ;
+    this.chart.options.plugins.annotation.annotations.line2.display = !this.chart.options.plugins.annotation.annotations.line2.display ;
+    this.chart.update();
   }
 
   onZoomInButtonClick() {
@@ -204,4 +293,5 @@ export class MultiLineChartsComponent implements OnInit {
   onZoomOutButtonClick() {
     this.chart.zoom(0.9);
   }
+
 }

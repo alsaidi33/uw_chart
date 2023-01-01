@@ -1,9 +1,17 @@
-import { AnnotationElement } from 'chartjs-plugin-annotation';
+// import { AnnotationElement } from 'chartjs-plugin-annotation';
+
+import { EventEmitter } from "@angular/core";
+
+export const singleAnnotationEmitter = new EventEmitter<number>();
 
 class AnotationData {
     public element: any;
     public lastEvent: any;
     public chart: any;
+    public x: any;
+    public x1: any;
+    public x2: any;
+
 }
 
 export const anotationData = new AnotationData();
@@ -46,13 +54,20 @@ export const handleElementDragging = function(event: any) {
     // console.log(event.x);
 
 
+  // console.log(anotationData.element.options.id);
   if (!anotationData.lastEvent || !anotationData.element) {
     // console.log('no');
     return false;
   }
 
-  let x = anotationData.chart.scales['x'].getValueForPixel(anotationData.element.x);
-  console.log(anotationData.chart.scales['x'].ticks[x].label);
+  if(anotationData.element.options.id == "line0" ){
+    anotationData.x = anotationData.chart.scales['x'].getValueForPixel(anotationData.element.x);
+    singleAnnotationEmitter.emit(anotationData.x);
+  }
+
+
+  // anotationData.x1 = anotationData.chart.scales['x'].getValueForPixel(anotationData.element.x);
+  // console.log(anotationData.chart.scales['x'].ticks[x].label);
 
   const moveX = event.x - anotationData.lastEvent .x;
   const moveY = event.y - anotationData.lastEvent .y;
