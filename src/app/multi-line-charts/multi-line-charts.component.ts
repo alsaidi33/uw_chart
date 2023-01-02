@@ -127,10 +127,10 @@ export class MultiLineChartsComponent implements OnInit {
             '2022-05-17',
           ],
           datasets: datasets,
+          
         },
         options: {
           events: ['mousedown', 'mouseup', 'mousemove', 'mouseout'],
-
           maintainAspectRatio: false,
           plugins: {
             legend: {
@@ -161,15 +161,17 @@ export class MultiLineChartsComponent implements OnInit {
                   type: 'line',
                   xMin: '2022-05-12',
                   xMax: '2022-05-12',
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
+                  borderColor: 'rgb(0, 0, 0)',
+                  borderWidth: 1,
                   label: {
                     display: true,
-                    content: [' '],
-                    textAlign: 'center'
-                  },
-
-                  
+                    content: ['    '],
+                    textAlign: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 255,255,0)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderRadius: 100,              
+                  },                  
                 },
                 
                 line1: {
@@ -177,29 +179,34 @@ export class MultiLineChartsComponent implements OnInit {
                   type: 'line',
                   xMin: '2022-05-12',
                   xMax: '2022-05-12',
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
+                  borderColor: 'rgb(0, 0, 0)',
+                  borderWidth: 1,
                   label: {
                     display: true,
-                    content: [' '],
-                    textAlign: 'center'
-                  },
-
-                  
+                    content: ['    '],
+                    textAlign: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 255,255,0)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderRadius: 100,              
+                  },                  
                 },
                 line2: {
                   display: false,
                   type: 'line',
-                  xMin: '2022-05-14',
-                  xMax: '2022-05-14',
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
+                  xMin: '2022-05-15',
+                  xMax: '2022-05-15',
+                  borderColor: 'rgb(0, 0, 0)',
+                  borderWidth: 1,
                   label: {
                     display: true,
-                    content: [' '],
-                    textAlign: 'center'
-                  },
-
+                    content: ['    '],
+                    textAlign: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 255,255,0)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderRadius: 100,              
+                  },                  
                 }
               }
           },
@@ -212,12 +219,14 @@ export class MultiLineChartsComponent implements OnInit {
               tension: 0.4,
             },
           },
+          
           scales: {
             y: {
               ticks: {
                 color: '#1D6CB4',
               },
               grid: {
+                display: false,
                 color: '#8898AA',
               },
             },
@@ -227,6 +236,7 @@ export class MultiLineChartsComponent implements OnInit {
               },
               grid: {
                 color: '#8898AA',
+                display: false,
                 drawOnChartArea: false,
               },
               position: { x : 0}
@@ -236,6 +246,7 @@ export class MultiLineChartsComponent implements OnInit {
                 color: '#8898AA',
               },
               grid: {
+                display: false,
                 color: '#8898AA',
               },
             },
